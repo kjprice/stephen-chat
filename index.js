@@ -1,19 +1,14 @@
 const app = require("express")();
 const http = require("http").Server(app);
 const io = require("socket.io")(http);
-const session = require("express-session");
+// const session = require("express-session");
+const expressSession = require('./middleware/session');
 const port = process.env.PORT || 4321;
 
 // app.set('trust proxy', 1) // trust first proxy
-const expresssession = session({
-  secret: "stephenandkjsupersecretproject",
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: false },
-});
 
-app.use(expresssession);
-io.engine.use(expresssession);
+app.use(expressSession);
+io.engine.use(expressSession);
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
