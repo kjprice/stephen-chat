@@ -12,10 +12,6 @@ app.use(express.static("public"));
 app.use(expressSession);
 io.engine.use(expressSession);
 
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
-});
-
 function initializeSocketSession(session) {
   if (!session.user) {
     session.user = {};
