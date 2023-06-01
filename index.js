@@ -7,8 +7,8 @@ const port = process.env.PORT || 4321;
 // app.set('trust proxy', 1) // trust first proxy
 const expresssession = session({
   secret: "stephenandkjsupersecretproject",
-  // resave: false,
-  // saveUninitialized: true,
+  resave: false,
+  saveUninitialized: true,
   cookie: { secure: false },
 });
 
@@ -16,13 +16,10 @@ app.use(expresssession);
 io.engine.use(expresssession);
 
 app.get("/", (req, res) => {
-  console.log("req.sessionID", req.sessionID);
   res.sendFile(__dirname + "/index.html");
 });
 
 io.on("connection", (socket) => {
-  // console.log(socket.handshake)
-  console.log(socket.request.session);
   const { session } = socket.request;
   if (!session.logs) {
     session.logs = [];
