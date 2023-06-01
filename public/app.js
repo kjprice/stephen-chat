@@ -16,21 +16,26 @@ function app() {
     window.scrollTo(0, document.body.scrollHeight);
   }
 
-  usernameForm.addEventListener('submit', e => {
-    e.preventDefault();
+  const handleSubmit = (el, callback) => {
+    el.addEventListener('submit', e => {
+      e.preventDefault();
+      callback(e);
+    });
+  }
+
+  const updateUsername = () => {
     const newUsername = usernameInput.value;
     console.log({newUsername});
     socket.emit('set_username', newUsername);
-  });
-  sendMessageForm.addEventListener('submit', function(e) {
-    e.preventDefault();
+  }
+  const sendMessage = () => {
     if (sendMessageInput.value) {
       socket.emit('chat message', sendMessageInput.value);
       sendMessageInput.value = '';
     }
-  });
+  }
 
-  socket.on('init_user', (user) => {
+  const initUser = user => {
     const { logs, username } = user;
     if (logs && logs.length) {
       displayMessages(logs);
@@ -38,9 +43,15 @@ function app() {
     if (username) {
       usernameInput.value = username;
     }
-  });
+  }
 
-  socket.on('chat message', function(msg) {
+  const receiveMessage = msg => {
     displayMessages([msg]);
-  });
+  }
+
+  handleSubmit(usernameForm, updateUsername)
+  handleSubmit(sendMessageForm, sendMessage)
+
+  socket.on('init_user', initUser);
+  socket.on('chat message', receiveMessage);
 }
