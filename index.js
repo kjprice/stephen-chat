@@ -6,7 +6,7 @@ const port = process.env.PORT || 4321;
 
 // app.set('trust proxy', 1) // trust first proxy
 const expresssession = session({
-  secret: "keyboard cat",
+  secret: "stephenandkjsupersecretproject",
   // resave: false,
   // saveUninitialized: true,
   cookie: { secure: false },
