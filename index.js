@@ -18,20 +18,24 @@ app.get("/", (req, res) => {
 
 io.on("connection", (socket) => {
   const { session } = socket.request;
-  if (!session.logs) {
-    session.logs = [];
-    session.save();
-  } else {
-    session.logs.forEach((msg) => {
-      socket.emit("chat message", msg);
-    });
+  if (!session.user) {
+    session.user = {};
   }
+  if (!session.user.logs) {
+    session.user.logs = [];
+  }
+  session.save();
+  socket.emit('init_user', session.user);
   socket.on("chat message", (msg) => {
     io.emit("chat message", msg);
-    session.logs.push(msg);
+    session.user.logs.push(msg);
     session.save();
-    console.log("session.logs", session.logs);
+    console.log("session.logs", session.user.logs);
   });
+  socket.on("set_username", (username) => {
+    session.user.username = username;
+    session.save();
+  })
 });
 
 http.listen(port, () => {
