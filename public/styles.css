@@ -5,7 +5,7 @@ body {
     Arial, sans-serif;
 }
 
-#form {
+#send-message-form {
   background: rgba(0, 0, 0, 0.15);
   padding: 0.25rem;
   position: fixed;
@@ -17,17 +17,17 @@ body {
   box-sizing: border-box;
   backdrop-filter: blur(10px);
 }
-#input {
+#send-message-input {
   border: none;
   padding: 0 1rem;
   flex-grow: 1;
   border-radius: 2rem;
   margin: 0.25rem;
 }
-#input:focus {
+#send-message-input:focus {
   outline: none;
 }
-#form > button {
+#send-message-form > button {
   background: #333;
   border: none;
   padding: 0 1rem;
@@ -37,14 +37,14 @@ body {
   color: #fff;
 }
 
-#messages {
+#messages-container {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
-#messages > li {
+#messages-container > li {
   padding: 0.5rem 1rem;
 }
-#messages > li:nth-child(odd) {
+#messages-container > li:nth-child(odd) {
   background: #efefef;
 }
